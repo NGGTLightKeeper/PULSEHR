@@ -16,7 +16,7 @@ $(function initProfilePage() {
     }
     return me.phone_verified
       ? '<span class="badge badge-success">подтверждён</span>'
-      : '<span class="badge badge-warning">не подтверждён</span>';
+      : '<span class="badge">не подтверждён</span>';
   }
 
   function fill(me, departments) {
@@ -56,7 +56,7 @@ $(function initProfilePage() {
         department_id: departmentId ? Number(departmentId) : null
       });
       $('#phoneBadge').html(phoneBadge(me));
-      $('.user-name').text(`@${me.username}`);
+      $('.user-link').text(`@${me.username}`);
       toast('Профиль сохранён.', 'success');
     } catch (error) {
       showErrors($form, error);

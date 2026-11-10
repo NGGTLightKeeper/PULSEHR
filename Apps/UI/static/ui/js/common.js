@@ -1,16 +1,5 @@
 // Copyright NGGT.LightKeeper. All Rights Reserved.
 
-// Icons.
-// Inline SVG icons used by several pages.
-export const ICONS = {
-  info: '<svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
-  shield: '<svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>',
-  user: '<svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
-  bell: '<svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>',
-  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>'
-};
-
-
 // Text.
 // Escape text for HTML.
 export function escHtml(value) {
@@ -193,7 +182,7 @@ export function confirmDialog(options) {
     const $body = $('<div>');
     $('<div class="dialog-message">').text(options.message || '').appendTo($body);
     const $actions = $('<div class="dialog-actions">').appendTo($body);
-    const $cancel = $('<button type="button" class="btn btn-secondary">').text(options.cancelText || 'Отмена').appendTo($actions);
+    const $cancel = $('<button type="button" class="btn">').text(options.cancelText || 'Отмена').appendTo($actions);
     const $confirm = $('<button type="button" class="btn">')
       .addClass(options.danger ? 'btn-danger' : 'btn-primary')
       .text(options.confirmText || 'Подтвердить')
@@ -225,7 +214,7 @@ export function promptDialog(options) {
     }
     const $input = $('<input class="input" type="text" maxlength="200" required>').val(options.value || '').appendTo($body);
     const $actions = $('<div class="dialog-actions">').appendTo($body);
-    const $cancel = $('<button type="button" class="btn btn-secondary">').text('Отмена').appendTo($actions);
+    const $cancel = $('<button type="button" class="btn">').text('Отмена').appendTo($actions);
     $('<button type="submit" class="btn btn-primary">').text(options.confirmText || 'Сохранить').appendTo($actions);
 
     const dialog = openDialog({

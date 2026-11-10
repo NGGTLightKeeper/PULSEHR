@@ -1,7 +1,7 @@
 // Copyright NGGT.LightKeeper. All Rights Reserved.
 
 import { getJson, patchJson, postJson, putJson } from '../api.js';
-import { ICONS, confirmDialog, escHtml, openDialog, setBusy, toast, toastError } from '../common.js';
+import { confirmDialog, escHtml, openDialog, setBusy, toast, toastError } from '../common.js';
 import { CHOICE_KINDS, NUMBER_KINDS, valueRange } from '../branching.js';
 import { createSurveyRunner } from '../runner.js';
 
@@ -392,7 +392,7 @@ $(function initBuilderPage() {
     $('#resultsLink').toggleClass('hidden', draft).attr('href', `/hr/surveys/${surveyId}/`);
     $('#closeBtn').toggleClass('hidden', !['active', 'scheduled'].includes(survey.status));
     $('#builderNotes').html(draft ? '' : `
-      <div class="alert">${ICONS.info}<div>Опрос опубликован: вопросы, режим и аудитория больше не меняются.
+      <div class="alert"><div>Опрос опубликован: вопросы, режим и аудитория больше не меняются.
       Можно изменить название, описание и дату окончания или сделать копию.</div></div>`);
   }
 

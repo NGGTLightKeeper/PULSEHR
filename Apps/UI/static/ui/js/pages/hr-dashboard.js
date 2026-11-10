@@ -2,7 +2,7 @@
 
 import { getJson } from '../api.js';
 import { escHtml, formatDate, percent, toastError } from '../common.js';
-import { enpsClass, renderChart, themeColor } from '../charts.js';
+import { renderChart, themeColor } from '../charts.js';
 
 // Targets of the hackathon KPI, in percent.
 const PUSH_RESPONSE_TARGET = 50;
@@ -11,16 +11,16 @@ const PUSH_COVERAGE_TARGET = 60;
 // HR dashboard.
 // KPI tiles, the eNPS trend, the departments of the latest eNPS survey and the channel funnel.
 $(function initDashboardPage() {
-  function kpiTile(label, value, note, valueClass) {
+  function kpiTile(label, value, note) {
     return `
       <section class="card kpi">
         <span class="kpi-label">${label}</span>
-        <span class="kpi-value ${valueClass || ''}">${value}</span>
+        <span class="kpi-value">${value}</span>
         <span class="kpi-note">${note}</span>
       </section>`;
   }
 
-  // Show a value against its target: green when reached.
+  // Show a value against its target.
   function targetNote(rate, target, details) {
     const reached = rate !== null && rate >= target;
     const mark = rate === null ? '' : reached ? '<span class="target-note kpi-good">цель достигнута</span>' : '<span class="target-note kpi-bad">ниже цели</span>';
@@ -35,8 +35,7 @@ $(function initDashboardPage() {
       kpiTile(
         'eNPS',
         enps ? (enps.score > 0 ? `+${enps.score}` : enps.score) : '—',
-        enps ? `${escHtml(enps.title)} · ${enps.responses} отв.` : 'Нет опросов с eNPS',
-        enps ? enpsClass(enps.score) : ''
+        enps ? `${escHtml(enps.title)} · ${enps.responses} отв.` : 'Нет опросов с eNPS'
       ),
       kpiTile(
         'Отклик на опросы',
@@ -46,14 +45,12 @@ $(function initDashboardPage() {
       kpiTile(
         'Ответ ≤ 24 ч после push',
         percent(pushResponse.rate),
-        targetNote(pushResponse.rate, PUSH_RESPONSE_TARGET, `${pushResponse.responded} из ${pushResponse.notified}`),
-        pushResponse.rate !== null && pushResponse.rate >= PUSH_RESPONSE_TARGET ? 'kpi-good' : ''
+        targetNote(pushResponse.rate, PUSH_RESPONSE_TARGET, `${pushResponse.responded} из ${pushResponse.notified}`)
       ),
       kpiTile(
         'Сотрудники с Web Push',
         percent(coverage.rate),
-        targetNote(coverage.rate, PUSH_COVERAGE_TARGET, `${coverage.with_push} из ${coverage.users}`),
-        coverage.rate !== null && coverage.rate >= PUSH_COVERAGE_TARGET ? 'kpi-good' : ''
+        targetNote(coverage.rate, PUSH_COVERAGE_TARGET, `${coverage.with_push} из ${coverage.users}`)
       )
     ].join(''));
   }
@@ -79,10 +76,9 @@ $(function initDashboardPage() {
             return item.score;
           }),
           borderColor: themeColor('--c-accent'),
-          backgroundColor: themeColor('--c-accent-soft'),
-          fill: true,
-          tension: 0.3,
-          pointRadius: 5
+          backgroundColor: themeColor('--c-accent'),
+          borderWidth: 2,
+          pointRadius: 3
         }]
       },
       options: {
@@ -126,7 +122,7 @@ $(function initDashboardPage() {
           backgroundColor: rows.map(function color(row) {
             return row.enps.score >= 0 ? themeColor('--c-success') : themeColor('--c-danger');
           }),
-          borderRadius: 6
+          borderRadius: 2
         }]
       },
       options: {
@@ -146,9 +142,9 @@ $(function initDashboardPage() {
           return item.label;
         }),
         datasets: [
-          { label: 'Отправлено', data: channels.map((item) => item.sent), backgroundColor: themeColor('--c-neutral'), borderRadius: 6 },
-          { label: 'Открыли', data: channels.map((item) => item.clicked), backgroundColor: themeColor('--c-info'), borderRadius: 6 },
-          { label: 'Прошли опрос', data: channels.map((item) => item.completed), backgroundColor: themeColor('--c-accent'), borderRadius: 6 }
+          { label: 'Отправлено', data: channels.map((item) => item.sent), backgroundColor: themeColor('--c-neutral'), borderRadius: 2 },
+          { label: 'Открыли', data: channels.map((item) => item.clicked), backgroundColor: themeColor('--c-info'), borderRadius: 2 },
+          { label: 'Прошли опрос', data: channels.map((item) => item.completed), backgroundColor: themeColor('--c-accent'), borderRadius: 2 }
         ]
       },
       options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
@@ -168,7 +164,7 @@ $(function initDashboardPage() {
             ${item.ends_at ? `<div class="muted small" style="margin-top:6px">до ${formatDate(item.ends_at)}</div>` : ''}
           </div>`;
       }).join('')
-      : '<div class="empty">Нет идущих опросов. <a href="/hr/surveys/">Создать опрос</a></div>');
+      : '<div class="empty">Идущих опросов нет.</div>');
   }
 
   async function load() {
@@ -179,7 +175,6 @@ $(function initDashboardPage() {
       renderDepartments(data.departments, data.enps);
       renderChannels(data.channels);
       renderActiveSurveys(data.active_surveys);
-      $('#feedbackNew').text(data.feedback_new);
     } catch (error) {
       toastError(error);
     }

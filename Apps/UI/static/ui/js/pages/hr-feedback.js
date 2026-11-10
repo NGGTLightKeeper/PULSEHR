@@ -24,7 +24,7 @@ $(function initFeedbackPage() {
            <div class="field">
              <textarea class="textarea" name="reply" rows="2" maxlength="4000" placeholder="Ответ сотруднику — он увидит его в своём центре">${escHtml(item.reply)}</textarea>
            </div>
-           <div class="form-actions"><button class="btn btn-secondary btn-sm" type="submit">Сохранить ответ</button></div>
+           <div class="form-actions"><button class="btn btn-sm" type="submit">Сохранить ответ</button></div>
          </form>`;
 
     return `

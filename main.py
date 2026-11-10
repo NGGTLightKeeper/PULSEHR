@@ -39,7 +39,7 @@ def _print(message: str) -> None:
 
 # End the command with the install hint when the dependencies are missing.
 def _check_dependencies() -> None:
-    packages = ("django", "rest_framework", "httpx", "pywebpush", "openpyxl", "whitenoise")
+    packages = ("django", "rest_framework", "telebot", "pywebpush", "openpyxl", "whitenoise")
     missing = [name for name in packages if importlib.util.find_spec(name) is None]
     if missing:
         _print(f"Missing packages: {', '.join(missing)}. Run: pip install -r requirements.txt")

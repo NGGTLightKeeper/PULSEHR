@@ -149,7 +149,7 @@ else:
 
 
 # Logging to the shared console, where every line carries the time and its source process.
-# HTTP client loggers stay quiet: their request lines contain the Telegram bot token.
+# The HTTP client logger stays quiet: its request lines contain the Telegram bot token.
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -163,8 +163,6 @@ LOGGING = {
     "loggers": {
         "django": {"handlers": ["console"], "level": "INFO", "propagate": False},
         "django.request": {"handlers": ["console"], "level": "ERROR", "propagate": False},
-        "httpx": {"level": "WARNING"},
-        "httpcore": {"level": "WARNING"},
         "urllib3": {"level": "WARNING"},
     },
 }

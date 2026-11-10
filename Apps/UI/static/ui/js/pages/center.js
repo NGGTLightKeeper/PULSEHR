@@ -1,7 +1,7 @@
 // Copyright NGGT.LightKeeper. All Rights Reserved.
 
 import { getJson, postJson } from '../api.js';
-import { ICONS, clearErrors, escHtml, formatDate, setBusy, showErrors, toast, toastError } from '../common.js';
+import { clearErrors, escHtml, formatDate, setBusy, showErrors, toast, toastError } from '../common.js';
 import { enablePush, getPushState } from '../push.js';
 
 // Employee center.
@@ -9,32 +9,34 @@ import { enablePush, getPushState } from '../push.js';
 $(function initCenterPage() {
   const STATUS_BADGES = { new: 'badge-info', in_progress: 'badge-warning', closed: 'badge-success' };
 
-  function surveyCard(item) {
-    const mode = item.mode === 'anonymous'
-      ? '<span class="badge badge-success">Анонимный</span>'
-      : '<span class="badge badge-info">С указанием имени</span>';
-    const deadline = item.ends_at ? `<span class="muted small">до ${formatDate(item.ends_at)}</span>` : '';
+  function surveyRow(item) {
+    const meta = [item.mode === 'anonymous' ? 'Анонимный' : 'С указанием имени'];
+    if (item.ends_at) {
+      meta.push(`до ${formatDate(item.ends_at)}`);
+    }
     return `
-      <article class="survey-card">
-        <div class="row">${mode}${deadline}</div>
-        <h3>${escHtml(item.title)}</h3>
-        ${item.description ? `<p>${escHtml(item.description)}</p>` : ''}
-        <a class="btn btn-primary" href="/surveys/${item.id}/">${item.opened_at ? 'Продолжить' : 'Пройти опрос'}</a>
-      </article>`;
+      <li class="survey-row">
+        <div>
+          <h3>${escHtml(item.title)}</h3>
+          ${item.description ? `<p>${escHtml(item.description)}</p>` : ''}
+          <span class="muted small">${meta.join(' · ')}</span>
+        </div>
+        <a class="btn btn-primary" href="/surveys/${item.id}/">${item.opened_at ? 'Продолжить' : 'Пройти'}</a>
+      </li>`;
   }
 
   async function loadSurveys() {
     try {
       const data = await getJson('/api/v1/surveys/');
       $('#activeSurveys').removeClass('loading').html(data.active.length
-        ? `<div class="survey-cards">${data.active.map(surveyCard).join('')}</div>`
-        : '<div class="empty">Сейчас опросов нет. Мы сообщим, когда появится новый.</div>');
+        ? `<ul class="survey-list">${data.active.map(surveyRow).join('')}</ul>`
+        : '<div class="empty">Активных опросов нет.</div>');
 
       $('#completedSurveys').removeClass('loading').html(data.completed.length
         ? `<ul class="done-list">${data.completed.map(function completedItem(item) {
           return `<li><span>${escHtml(item.title)}</span><span class="muted small">${formatDate(item.completed_at)}</span></li>`;
         }).join('')}</ul>`
-        : '<div class="empty">Пока нет пройденных опросов.</div>');
+        : '<div class="empty">Пройденных опросов нет.</div>');
     } catch (error) {
       toastError(error);
     }
@@ -57,7 +59,7 @@ $(function initCenterPage() {
               ${reply}
             </div>`;
         }).join('')
-        : '<div class="empty">Здесь появятся ваши обращения с подписью и ответы на них.</div>');
+        : '<div class="empty">Обращений с подписью нет.</div>');
     } catch (error) {
       toastError(error);
     }
@@ -70,13 +72,9 @@ $(function initCenterPage() {
       return;
     }
     $('#pushBanner').html(`
-      <div class="alert alert-accent">
-        ${ICONS.bell}
-        <div style="flex:1">
-          <strong>Не пропускайте опросы.</strong>
-          <div class="muted small">Включите уведомления в браузере — новый опрос придёт сразу.</div>
-        </div>
-        <button type="button" class="btn btn-primary btn-sm" id="enablePushBtn">Включить</button>
+      <div class="alert">
+        <div>Уведомления в браузере выключены: о новых опросах вы узнаете позже.</div>
+        <button type="button" class="btn btn-sm" id="enablePushBtn">Включить</button>
       </div>`);
   }
 
@@ -106,7 +104,7 @@ $(function initCenterPage() {
         is_anonymous: anonymous
       });
       $form[0].reset();
-      toast(anonymous ? 'Анонимное сообщение отправлено.' : 'Сообщение отправлено. Ответ появится здесь.', 'success');
+      toast(anonymous ? 'Анонимное сообщение отправлено.' : 'Сообщение отправлено.', 'success');
       loadFeedback();
     } catch (error) {
       showErrors($form, error);

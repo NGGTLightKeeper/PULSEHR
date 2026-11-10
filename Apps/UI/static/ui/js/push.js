@@ -115,7 +115,7 @@ export function mountPushBlock($container, options) {
     } else if (state.subscribed) {
       html = '<div class="row"><span class="badge badge-success">Включены в этом браузере</span></div>'
         + '<p class="muted small">Новые опросы будут приходить уведомлением, даже когда сайт закрыт.</p>'
-        + '<button type="button" class="btn btn-secondary btn-sm" data-push-disable>Отключить</button>';
+        + '<button type="button" class="btn btn-sm" data-push-disable>Отключить</button>';
     } else if (state.permission === 'denied') {
       html = '<p><span class="badge badge-warning">Запрещены в браузере</span></p>'
         + '<p class="muted small">Разрешите уведомления для этого сайта в настройках браузера (значок замка в адресной строке) и обновите страницу.</p>';

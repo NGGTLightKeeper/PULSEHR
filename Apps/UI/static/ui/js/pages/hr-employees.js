@@ -66,7 +66,7 @@ $(function initEmployeesPage() {
       return `<option value="${role}" ${user.role === role ? 'selected' : ''}>${ROLES[role]}</option>`;
     }).join('');
     const phone = user.phone
-      ? `${escHtml(user.phone)} ${user.phone_verified ? '' : '<span class="badge badge-warning">не подтверждён</span>'}`
+      ? `${escHtml(user.phone)} ${user.phone_verified ? '' : '<span class="badge">не подтверждён</span>'}`
       : '<span class="muted">—</span>';
     const telegram = user.telegram_username
       ? `<span class="badge ${user.telegram_verified ? 'badge-success' : 'badge-warning'}">@${escHtml(user.telegram_username)}</span>`

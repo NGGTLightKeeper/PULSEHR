@@ -1,7 +1,7 @@
 // Copyright NGGT.LightKeeper. All Rights Reserved.
 
 import { getJson, postJson } from '../api.js';
-import { ICONS, escHtml, formatDate } from '../common.js';
+import { escHtml, formatDate } from '../common.js';
 import { createSurveyRunner } from '../runner.js';
 
 // Survey page.
@@ -14,31 +14,29 @@ $(function initSurveyPage() {
   function modeBanner(survey) {
     if (survey.mode === 'anonymous') {
       return `
-        <div class="alert alert-success">
-          ${ICONS.shield}
+        <div class="alert">
           <div>
             <strong>Опрос анонимный.</strong>
-            <div class="small">Ответы хранятся отдельно от вашего профиля: в них нет имени, контактов и времени ответа, только дата.
-            HR видит итоги, только когда ответов достаточно много, чтобы никого нельзя было узнать.
+            <div class="small muted">Ответы хранятся отдельно от профиля: без имени, контактов и времени, только с датой.
+            HR видит итоги, только когда ответов достаточно, чтобы никого нельзя было узнать.
             Не указывайте в свободных ответах то, что может вас выдать.</div>
           </div>
         </div>`;
     }
     return `
       <div class="alert">
-        ${ICONS.user}
         <div>
-          <strong>Вы отвечаете как @${escHtml(survey.username)}.</strong>
-          <div class="small">Этот опрос не анонимный: HR увидит ваши ответы вместе с именем пользователя.</div>
+          <strong>Опрос не анонимный.</strong>
+          <div class="small muted">HR увидит ваши ответы вместе с именем пользователя @${escHtml(survey.username)}.</div>
         </div>
       </div>`;
   }
 
   function closedMessage(survey) {
     const text = survey.completed
-      ? 'Вы уже прошли этот опрос. Спасибо!'
+      ? 'Вы уже прошли этот опрос.'
       : `Опрос ${survey.status === 'closed' ? 'завершён' : 'пока недоступен'}.`;
-    return `<div class="card"><div class="empty">${text}<br><br><a class="btn btn-secondary" href="/">К моим опросам</a></div></div>`;
+    return `<div class="card"><p>${text}</p><a class="btn" href="/">На главную</a></div>`;
   }
 
   async function load() {
@@ -46,7 +44,7 @@ $(function initSurveyPage() {
     try {
       survey = await getJson(`/api/v1/surveys/${surveyId}/`);
     } catch (error) {
-      $page.html(`<div class="card"><div class="empty">${escHtml(error.message)}<br><br><a class="btn btn-secondary" href="/">К моим опросам</a></div></div>`);
+      $page.html(`<div class="card"><p>${escHtml(error.message)}</p><a class="btn" href="/">На главную</a></div>`);
       return;
     }
 

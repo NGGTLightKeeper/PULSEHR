@@ -14,8 +14,6 @@ from Apps.API.models import (
     AttemptStatus,
     Channel,
     Department,
-    Feedback,
-    FeedbackStatus,
     NotificationAttempt,
     Question,
     QuestionKind,
@@ -299,7 +297,6 @@ def dashboard() -> dict[str, Any]:
         "channels": channel_funnel(participations),
         "survey_counts": {status.value: status_counts[status.value] for status in SurveyStatus},
         "active_surveys": active_surveys,
-        "feedback_new": Feedback.objects.filter(status=FeedbackStatus.NEW).count(),
     }
 
 

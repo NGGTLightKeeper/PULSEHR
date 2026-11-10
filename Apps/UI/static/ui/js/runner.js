@@ -45,20 +45,15 @@ export function createSurveyRunner($container, questions, options) {
 
   function scaleHtml(question, answer) {
     const [low, high] = valueRange(question);
-    const isEnps = question.kind === 'enps';
     const buttons = [];
     for (let value = low; value <= high; value += 1) {
-      let group = '';
-      if (isEnps) {
-        group = value <= 6 ? 'detractor' : value <= 8 ? 'passive' : 'promoter';
-      }
       const selected = answer.number === value ? 'selected' : '';
-      buttons.push(`<button type="button" class="scale-btn ${group} ${selected}" data-value="${value}">${value}</button>`);
+      buttons.push(`<button type="button" class="scale-btn ${selected}" data-value="${value}">${value}</button>`);
     }
     const labels = question.min_label || question.max_label
       ? `<div class="scale-labels"><span>${escHtml(question.min_label)}</span><span>${escHtml(question.max_label)}</span></div>`
       : '';
-    return `<div class="scale ${isEnps ? 'scale-enps' : ''}">${buttons.join('')}</div>${labels}`;
+    return `<div class="scale">${buttons.join('')}</div>${labels}`;
   }
 
   function textHtml(answer) {
@@ -115,7 +110,7 @@ export function createSurveyRunner($container, questions, options) {
           ${questionError ? `<div class="form-error" role="alert">${escHtml(questionError)}</div>` : ''}
         </div>
         <div class="runner-nav">
-          <button type="button" class="btn btn-secondary" data-back ${history.length ? '' : 'disabled'}>Назад</button>
+          <button type="button" class="btn" data-back ${history.length ? '' : 'disabled'}>Назад</button>
           <button type="button" class="btn btn-primary" data-next>Далее</button>
         </div>
       </div>`);

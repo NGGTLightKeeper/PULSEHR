@@ -7,10 +7,7 @@
 
 {% block content %}
     <div class="page-head">
-        <div>
-            <h1>Профиль</h1>
-            <p class="muted">Другие сотрудники и опросы видят только ваше имя пользователя.</p>
-        </div>
+        <h1>Профиль</h1>
     </div>
 
     <div class="stack">
@@ -30,6 +27,7 @@
                     <div class="field">
                         <label for="username">Имя пользователя</label>
                         <input class="input" id="username" name="username" maxlength="32" required>
+                        <span class="field-hint">Показывается вместо e-mail и телефона.</span>
                     </div>
                     <div class="field">
                         <label for="phone">Телефон <span id="phoneBadge"></span></label>

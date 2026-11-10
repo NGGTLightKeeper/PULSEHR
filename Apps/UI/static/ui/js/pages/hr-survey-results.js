@@ -1,7 +1,7 @@
 // Copyright NGGT.LightKeeper. All Rights Reserved.
 
 import { getJson, postJson } from '../api.js';
-import { ICONS, confirmDialog, escHtml, formatDate, percent, setBusy, toastError } from '../common.js';
+import { confirmDialog, escHtml, formatDate, percent, setBusy, toastError } from '../common.js';
 import { barsHtml, enpsClass, enpsSplitHtml, histogramHtml } from '../charts.js';
 
 // Badge colors of the survey statuses.
@@ -13,11 +13,11 @@ $(function initResultsPage() {
   const surveyId = $('#resultsPage').data('survey-id');
   const $results = $('#results');
 
-  function kpi(label, value, note, valueClass) {
+  function kpi(label, value, note) {
     return `
       <section class="card kpi">
         <span class="kpi-label">${label}</span>
-        <span class="kpi-value ${valueClass || ''}">${value}</span>
+        <span class="kpi-value">${value}</span>
         <span class="kpi-note">${note}</span>
       </section>`;
   }
@@ -49,8 +49,8 @@ $(function initResultsPage() {
       <div class="grid grid-4">
         ${kpi('Приглашено', participation.invited, `открыли: ${participation.opened}`)}
         ${kpi('Прошли', participation.completed, `отклик ${percent(participation.rate)}`)}
-        ${kpi('eNPS', data.enps ? formatScore(data.enps.score) : '—', data.enps ? `${data.enps.total} оценок` : 'нет вопроса eNPS или ответов', data.enps ? enpsClass(data.enps.score) : '')}
-        ${kpi('Ответ ≤ 24 ч после push', percent(push.rate), `${push.responded} из ${push.notified} получивших push · цель ≥ 50%`, push.rate !== null && push.rate >= 50 ? 'kpi-good' : '')}
+        ${kpi('eNPS', data.enps ? formatScore(data.enps.score) : '—', data.enps ? `${data.enps.total} оценок` : 'нет вопроса eNPS или ответов')}
+        ${kpi('Ответ ≤ 24 ч после push', percent(push.rate), `${push.responded} из ${push.notified} получивших push · цель ≥ 50%`)}
       </div>`;
   }
 
@@ -128,8 +128,8 @@ $(function initResultsPage() {
     document.title = `${data.survey.title} · PULSEHR`;
 
     const hidden = data.hidden
-      ? `<div class="alert alert-warning">${ICONS.shield}<div><strong>Ответы скрыты для анонимности.</strong>
-          <div class="small">Сейчас ответов: ${data.responses}. Итоги появятся, когда их будет не меньше ${data.min_group_size}.</div></div></div>`
+      ? `<div class="alert alert-warning"><div><strong>Ответы скрыты для анонимности.</strong>
+          <div class="small muted">Сейчас ответов: ${data.responses}. Итоги появятся, когда их будет не меньше ${data.min_group_size}.</div></div></div>`
       : '';
     const enpsBlock = data.enps
       ? `<section class="card"><div class="card-head"><h3>eNPS: <span class="${enpsClass(data.enps.score)}">${formatScore(data.enps.score)}</span></h3></div>${enpsSplitHtml(data.enps)}</section>`

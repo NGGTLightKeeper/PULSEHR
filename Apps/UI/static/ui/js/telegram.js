@@ -55,7 +55,7 @@ export function mountTelegramBlock($container, options) {
         <strong>@${escHtml(status.telegram_username)}</strong>
       </div>
       <p class="muted small">Сюда приходят коды входа и приглашения в опросы.</p>
-      <button type="button" class="btn btn-secondary btn-sm" data-tg-disconnect>Отключить</button>`;
+      <button type="button" class="btn btn-sm" data-tg-disconnect>Отключить</button>`;
   }
 
   function render(editing) {
