@@ -285,6 +285,7 @@ class HrSurveyListView(HrView):
                 invited_count=Count("participations", distinct=True),
                 completed_count=Count("participations", filter=Q(participations__completed_at__isnull=False), distinct=True),
             )
+            .order_by("-created_at")
         )
         return Response(SurveySerializer(items, many=True).data)
 

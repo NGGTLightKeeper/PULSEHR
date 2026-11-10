@@ -29,7 +29,7 @@ $(function initSurveysPage() {
          <div class="progress" style="width:120px;margin-top:4px"><div class="progress-bar" style="width:${rate || 0}%"></div></div>`;
     const dates = survey.status === 'draft'
       ? `создан ${formatDate(survey.created_at)}`
-      : `${formatDate(survey.published_at)}${survey.ends_at ? ` — ${formatDate(survey.ends_at)}` : ''}`;
+      : `${formatDate(survey.starts_at || survey.published_at)}${survey.ends_at ? ` — ${formatDate(survey.ends_at)}` : ''}`;
     const remove = survey.status === 'draft'
       ? `<button type="button" class="btn btn-ghost btn-sm" data-delete="${survey.id}">Удалить</button>`
       : '';
