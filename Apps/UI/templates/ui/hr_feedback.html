@@ -1,0 +1,29 @@
+{% extends "ui/base.html" %}
+{% load static %}
+{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}
+
+{% block title %}Обращения{% endblock %}
+{% block page_class %}page-narrow{% endblock %}
+
+{% block content %}
+    <div class="page-head">
+        <div>
+            <h1>Обращения сотрудников</h1>
+            <p class="muted">Свободная обратная связь. Автор анонимного обращения неизвестен, ответить на него нельзя.</p>
+        </div>
+    </div>
+
+    <div class="stack">
+        <div class="tabs" id="statusTabs">
+            <button class="tab active" type="button" data-status="">Все</button>
+            <button class="tab" type="button" data-status="new">Новые</button>
+            <button class="tab" type="button" data-status="in_progress">В работе</button>
+            <button class="tab" type="button" data-status="closed">Закрытые</button>
+        </div>
+        <div id="feedbackList" class="stack"><div class="loading">Загрузка…</div></div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'ui/js/pages/hr-feedback.js' %}"></script>
+{% endblock %}

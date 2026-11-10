@@ -1,0 +1,17 @@
+{% extends "ui/base.html" %}
+{% load static %}
+{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}
+
+{% block title %}Опрос{% endblock %}
+{% block page_class %}page-narrow{% endblock %}
+
+{% block content %}
+    {# The survey is loaded by its id; the runner shows the questions along the branching path. #}
+    <div id="surveyPage" data-survey-id="{{ survey_id }}">
+        <div class="loading">Загрузка опроса…</div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'ui/js/pages/survey.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "ui/base.html" %}
+{% load static %}
+{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}
+
+{% block title %}Опросы{% endblock %}
+
+{% block content %}
+    <div class="page-head">
+        <div>
+            <h1>Опросы</h1>
+            <p class="muted">Черновики, запланированные, идущие и завершённые опросы.</p>
+        </div>
+        <div class="page-actions">
+            <button class="btn btn-secondary" type="button" id="templateBtn">Шаблон eNPS</button>
+            <button class="btn btn-primary" type="button" id="createBtn">Новый опрос</button>
+        </div>
+    </div>
+
+    <div class="stack">
+        <div class="tabs" id="statusTabs" role="tablist">
+            <button class="tab active" type="button" data-status="">Все</button>
+            <button class="tab" type="button" data-status="draft">Черновики</button>
+            <button class="tab" type="button" data-status="scheduled">Запланированы</button>
+            <button class="tab" type="button" data-status="active">Идут</button>
+            <button class="tab" type="button" data-status="closed">Завершены</button>
+        </div>
+        <section class="card card-flush">
+            <div class="table-wrap" id="surveysTable"><div class="loading">Загрузка…</div></div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'ui/js/pages/hr-surveys.js' %}"></script>
+{% endblock %}

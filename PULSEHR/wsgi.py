@@ -1,16 +1,10 @@
-"""
-WSGI config for PULSEHR project.
-
-It exposes the WSGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/6.0/howto/deployment/wsgi/
-"""
+# Copyright NGGT.LightKeeper. All Rights Reserved.
 
 import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'PULSEHR.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PULSEHR.settings")
 
+# WSGI callable served by main.py runserver (PULSEHR.wsgi:application).
 application = get_wsgi_application()

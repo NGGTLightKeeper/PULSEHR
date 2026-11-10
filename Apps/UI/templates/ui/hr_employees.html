@@ -1,0 +1,47 @@
+{% extends "ui/base.html" %}
+{% load static %}
+{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}
+
+{% block title %}Сотрудники{% endblock %}
+
+{% block content %}
+    <div class="page-head">
+        <div>
+            <h1>Сотрудники и подразделения</h1>
+            <p class="muted">Подразделения нужны для аудитории опросов и разрезов аналитики.</p>
+        </div>
+    </div>
+
+    <div class="stack">
+        {# Department tree. #}
+        <section class="card">
+            <div class="card-head"><h3>Подразделения</h3></div>
+            <form class="row" id="departmentForm" novalidate style="margin-bottom:12px">
+                <div class="field" style="flex:2;min-width:200px">
+                    <input class="input" name="name" placeholder="Название подразделения" maxlength="200">
+                </div>
+                <div class="field" style="flex:1;min-width:180px">
+                    <select class="select" name="parent_id" id="parentSelect"></select>
+                </div>
+                <div class="form-actions"><button class="btn btn-primary" type="submit">Добавить</button></div>
+            </form>
+            <div id="departments" class="loading">Загрузка…</div>
+        </section>
+
+        {# Employees with their roles and channels. #}
+        <section class="card card-flush">
+            <div class="row-between" style="padding:16px 20px">
+                <h3 style="margin:0">Сотрудники</h3>
+                <div class="row">
+                    <input class="input input-sm" id="search" type="search" placeholder="Поиск: имя, e-mail, телефон" style="width:240px">
+                    <select class="select input-sm" id="departmentFilter" style="width:200px"></select>
+                </div>
+            </div>
+            <div class="table-wrap" id="employees"><div class="loading">Загрузка…</div></div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'ui/js/pages/hr-employees.js' %}"></script>
+{% endblock %}

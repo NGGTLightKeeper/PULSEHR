@@ -1,0 +1,16 @@
+{% extends "ui/base.html" %}
+{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}
+
+{% block body %}
+    {# Centered card of the sign-in and registration pages. #}
+    <main class="auth-page">
+        <div class="auth-box">
+            <div class="auth-brand">{% include "ui/logo.html" %}<span>PULSEHR</span></div>
+            <p class="auth-tagline">Корпоративный сервис pulse-опросов сотрудников</p>
+            <div class="card auth-card">
+                {% block auth_content %}{% endblock %}
+            </div>
+            {% block auth_footer %}{% endblock %}
+        </div>
+    </main>
+{% endblock %}

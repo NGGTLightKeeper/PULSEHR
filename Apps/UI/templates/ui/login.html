@@ -1,0 +1,49 @@
+{% extends "ui/auth_base.html" %}
+{% load static %}
+{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}
+
+{% block title %}Вход{% endblock %}
+
+{% block auth_content %}
+    {# Step 1: the account. #}
+    <form class="form" id="loginForm" novalidate>
+        <h1>Вход</h1>
+        <div class="field">
+            <label for="login">E-mail, имя пользователя или телефон</label>
+            <input class="input" id="login" name="login" autocomplete="username" required autofocus>
+            <span class="field-hint">Войти по телефону можно, только если номер подтверждён.</span>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary btn-block" type="submit">Получить код</button>
+        </div>
+    </form>
+
+    {# Step 2: the code sent to every channel of the account. #}
+    <form class="form hidden" id="codeForm" novalidate>
+        <h1>Введите код</h1>
+        <div>
+            <div class="muted">Один и тот же код отправлен:</div>
+            <ul class="code-sent" id="codeChannels"></ul>
+        </div>
+        <div class="field">
+            <label for="code">Код из сообщения</label>
+            <input class="input code-input" id="code" name="code" inputmode="numeric" maxlength="6" placeholder="000000" autocomplete="one-time-code">
+            <span class="field-hint">Код действует 10 минут.</span>
+        </div>
+        <div class="form-actions stack">
+            <button class="btn btn-primary btn-block" type="submit">Войти</button>
+            <div class="row-between">
+                <button class="btn btn-ghost btn-sm" type="button" id="backBtn">← Другой аккаунт</button>
+                <button class="btn btn-ghost btn-sm" type="button" id="resendBtn">Отправить код ещё раз</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block auth_footer %}
+    <p class="auth-footer">Нет аккаунта? <a href="/register/">Зарегистрироваться</a></p>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'ui/js/pages/login.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "ui/auth_base.html" %}
+{% load static %}
+{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block auth_content %}
+    {# Step 1: the account data. #}
+    <form class="form" id="registerForm" novalidate>
+        <h1>Регистрация</h1>
+        <div class="field">
+            <label for="email">Рабочий e-mail</label>
+            <input class="input" id="email" name="email" type="email" autocomplete="email" required autofocus>
+        </div>
+        <div class="field">
+            <label for="username">Имя пользователя</label>
+            <input class="input" id="username" name="username" autocomplete="username" maxlength="32" required>
+            <span class="field-hint">Его видят вместо ваших контактов: в опросах и в профиле.</span>
+        </div>
+        <div class="field">
+            <label for="phone">Телефон</label>
+            <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+7 900 000-00-00" required>
+            <span class="field-hint">Номер пока не подтверждается — в профиле он будет с отметкой «не подтверждён».</span>
+        </div>
+        <div class="field" id="departmentField">
+            <label for="department">Подразделение</label>
+            <select class="select" id="department" name="department_id"></select>
+        </div>
+        <div class="field">
+            <label for="telegram">Telegram <span class="muted">(необязательно)</span></label>
+            <input class="input" id="telegram" name="telegram_username" placeholder="@username" maxlength="33" autocomplete="off">
+            <span class="field-hint">Подтвердите его через бота после регистрации — туда будут приходить коды и опросы.</span>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary btn-block" type="submit">Получить код на почту</button>
+        </div>
+    </form>
+
+    {# Step 2: the code from the e-mail. #}
+    <form class="form hidden" id="codeForm" novalidate>
+        <h1>Подтвердите почту</h1>
+        <p class="muted">Код отправлен на <span id="codeEmail"></span>.</p>
+        <div class="field">
+            <label for="code">Код из письма</label>
+            <input class="input code-input" id="code" name="code" inputmode="numeric" maxlength="6" placeholder="000000" autocomplete="one-time-code">
+            <span class="field-hint">Код действует 10 минут.</span>
+        </div>
+        <div class="form-actions stack">
+            <button class="btn btn-primary btn-block" type="submit">Создать аккаунт</button>
+            <div class="row-between">
+                <button class="btn btn-ghost btn-sm" type="button" id="backBtn">← Изменить данные</button>
+                <button class="btn btn-ghost btn-sm" type="button" id="resendBtn">Отправить код ещё раз</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block auth_footer %}
+    <p class="auth-footer">Уже есть аккаунт? <a href="/login/">Войти</a></p>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'ui/js/pages/register.js' %}"></script>
+{% endblock %}

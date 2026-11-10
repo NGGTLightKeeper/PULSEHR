@@ -1,0 +1,55 @@
+{% extends "ui/base.html" %}
+{% load static %}
+{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}
+
+{% block title %}Дашборд HR{% endblock %}
+
+{% block head %}
+    <script src="{% static 'ui/vendor/chart.umd.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="page-head">
+        <div>
+            <h1>Дашборд</h1>
+            <p class="muted">eNPS, отклик и каналы уведомлений по всем опросам.</p>
+        </div>
+        <div class="page-actions">
+            <a class="btn btn-secondary" href="/hr/feedback/">Обращения <span class="badge badge-accent" id="feedbackNew">0</span></a>
+            <a class="btn btn-primary" href="/hr/surveys/">Опросы</a>
+        </div>
+    </div>
+
+    <div class="stack">
+        {# KPI from the hackathon task. #}
+        <div class="grid grid-4" id="kpis"><div class="card loading">Загрузка…</div></div>
+
+        <div class="grid grid-2">
+            <section class="card">
+                <div class="card-head"><h3>Динамика eNPS</h3></div>
+                <div class="chart-box"><canvas id="trendChart"></canvas></div>
+                <div id="trendEmpty" class="empty hidden">Пока нет опросов с вопросом eNPS и достаточным числом ответов.</div>
+            </section>
+            <section class="card">
+                <div class="card-head"><h3>eNPS по подразделениям</h3><span class="muted small" id="departmentsSurvey"></span></div>
+                <div class="chart-box"><canvas id="departmentsChart"></canvas></div>
+                <div id="departmentsEmpty" class="empty hidden">Нет данных по подразделениям.</div>
+            </section>
+        </div>
+
+        <div class="grid grid-2">
+            <section class="card">
+                <div class="card-head"><h3>Каналы уведомлений</h3></div>
+                <div class="chart-box"><canvas id="channelsChart"></canvas></div>
+            </section>
+            <section class="card">
+                <div class="card-head"><h3>Идущие опросы</h3></div>
+                <div id="activeSurveys"></div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'ui/js/pages/hr-dashboard.js' %}"></script>
+{% endblock %}

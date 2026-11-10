@@ -1,0 +1,10 @@
+{% extends "ui/auth_base.html" %}
+{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}
+
+{% block title %}Ошибка сервера{% endblock %}
+
+{% block auth_content %}
+    <h1>Что-то пошло не так</h1>
+    <p class="muted">Ошибка уже записана в журнал сервера. Попробуйте обновить страницу чуть позже.</p>
+    <a class="btn btn-primary" href="/">На главную</a>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "ui/base.html" %}
+{% load static %}
+{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}
+
+{% block title %}Настройка уведомлений{% endblock %}
+{% block page_class %}page-narrow{% endblock %}
+
+{% block content %}
+    <div class="page-head">
+        <div>
+            <h1>Добро пожаловать, @{{ user.username }}!</h1>
+            <p class="muted">Два шага, чтобы не пропускать опросы. Их можно пропустить и настроить позже в профиле.</p>
+        </div>
+    </div>
+
+    <div class="stack">
+        {# Web Push of this browser. #}
+        <section class="card">
+            <div class="card-head"><h2>1. Уведомления в браузере</h2></div>
+            <div id="pushBlock" class="loading">Загрузка…</div>
+        </section>
+
+        {# Telegram confirmation through the bot. #}
+        <section class="card">
+            <div class="card-head"><h2>2. Telegram</h2></div>
+            <div id="telegramBlock" class="loading">Загрузка…</div>
+        </section>
+
+        <div class="row-between">
+            <span class="muted small">Если ничего не подключить, приглашения будут приходить на почту.</span>
+            <a class="btn btn-primary" href="/">Перейти к опросам</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'ui/js/pages/onboarding.js' %}"></script>
+{% endblock %}

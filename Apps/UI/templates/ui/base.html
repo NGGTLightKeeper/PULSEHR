@@ -1,0 +1,58 @@
+{% load static %}{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}PULSEHR{% endblock %} · PULSEHR</title>
+    <link rel="icon" href="{% static 'ui/img/favicon.svg' %}" type="image/svg+xml">
+    <link rel="stylesheet" href="{% static 'ui/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'ui/css/pages.css' %}">
+    <script src="{% static 'ui/vendor/jquery.min.js' %}"></script>
+    {% block head %}{% endblock %}
+</head>
+
+<body data-authenticated="{% if user.is_authenticated %}true{% else %}false{% endif %}">
+{% csrf_token %}
+{% block body %}
+    {# Site header with the menu of the user role. #}
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="brand" href="/">{% include "ui/logo.html" %}<span>PULSEHR</span></a>
+
+            <nav class="site-nav" id="siteNav">
+                <a href="/" class="{% if nav == 'center' %}active{% endif %}">Мои опросы</a>
+                <a href="/profile/" class="{% if nav == 'profile' %}active{% endif %}">Профиль</a>
+                {% if user.is_hr %}
+                    <span class="nav-divider"></span>
+                    <a href="/hr/" class="{% if nav == 'hr_dashboard' %}active{% endif %}">Дашборд</a>
+                    <a href="/hr/surveys/" class="{% if nav == 'hr_surveys' %}active{% endif %}">Опросы</a>
+                    <a href="/hr/employees/" class="{% if nav == 'hr_employees' %}active{% endif %}">Сотрудники</a>
+                    <a href="/hr/feedback/" class="{% if nav == 'hr_feedback' %}active{% endif %}">Обращения</a>
+                {% endif %}
+            </nav>
+
+            <button class="btn btn-ghost btn-icon nav-toggle" id="navToggle" type="button" aria-label="Меню" aria-expanded="false" aria-controls="siteNav">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+
+            <div class="user-menu">
+                <a class="user-chip" href="/profile/" title="Профиль">
+                    <span class="avatar">{{ user.username|first }}</span>
+                    <span class="user-name">@{{ user.username }}</span>
+                </a>
+                <button class="btn btn-ghost btn-sm" id="logoutBtn" type="button">Выйти</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="page {% block page_class %}{% endblock %}">
+        {% block content %}{% endblock %}
+    </main>
+{% endblock %}
+
+<script type="module" src="{% static 'ui/js/app.js' %}"></script>
+{% block scripts %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+{% extends "ui/base.html" %}
+{% load static %}
+{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}
+
+{% block title %}Конструктор опроса{% endblock %}
+
+{% block content %}
+    <div id="builderPage" data-survey-id="{{ survey_id }}">
+        <div class="page-head">
+            <div>
+                <a class="muted small" href="/hr/surveys/">← Все опросы</a>
+                <h1 id="surveyTitle">Опрос</h1>
+                <div class="row">
+                    <span class="badge" id="statusBadge"></span>
+                    <span class="muted small" id="saveState"></span>
+                </div>
+            </div>
+            <div class="page-actions">
+                <button class="btn btn-secondary" type="button" id="previewBtn">Предпросмотр</button>
+                <button class="btn btn-secondary" type="button" id="saveBtn">Сохранить</button>
+                <button class="btn btn-primary hidden" type="button" id="publishBtn">Опубликовать</button>
+                <a class="btn btn-secondary hidden" id="resultsLink">Результаты</a>
+                <button class="btn btn-danger hidden" type="button" id="closeBtn">Завершить опрос</button>
+            </div>
+        </div>
+
+        <div class="stack">
+            <div id="builderNotes"></div>
+
+            <div class="builder">
+                {# Questions with their options and branch rules. #}
+                <div>
+                    <div id="questions"><div class="loading">Загрузка…</div></div>
+                    <div class="add-question hidden" id="addQuestion">
+                        <span class="muted small" style="width:100%">Добавить вопрос:</span>
+                        <button class="btn btn-secondary btn-sm" type="button" data-add="single">Один вариант</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-add="multiple">Несколько вариантов</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-add="scale">Шкала</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-add="enps">eNPS</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-add="text">Свободный ответ</button>
+                    </div>
+                </div>
+
+                {# Survey settings: mode, audience, dates and the notification cascade. #}
+                <aside class="builder-side">
+                    <section class="card">
+                        <div class="card-head"><h3>Настройки</h3></div>
+                        <form class="form" id="settingsForm" novalidate></form>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'ui/js/pages/hr-survey-edit.js' %}"></script>
+{% endblock %}

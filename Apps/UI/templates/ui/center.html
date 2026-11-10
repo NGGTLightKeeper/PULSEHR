@@ -1,0 +1,69 @@
+{% extends "ui/base.html" %}
+{% load static %}
+{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}
+
+{% block title %}Мои опросы{% endblock %}
+
+{% block content %}
+    <div class="page-head">
+        <div>
+            <h1>Центр обратной связи</h1>
+            <p class="muted">Опросы для вас и прямая связь с HR — всё в одном месте.</p>
+        </div>
+    </div>
+
+    <div class="stack">
+        <div id="pushBanner"></div>
+
+        {# Surveys waiting for an answer. #}
+        <section class="card">
+            <div class="card-head"><h2>Ждут вашего ответа</h2></div>
+            <div id="activeSurveys" class="loading">Загрузка…</div>
+        </section>
+
+        <div class="grid grid-2">
+            {# Free-form feedback to HR. #}
+            <section class="card">
+                <div class="card-head"><h2>Написать HR</h2></div>
+                <form class="form" id="feedbackForm" novalidate>
+                    <div class="field">
+                        <label for="category">Тема</label>
+                        <select class="select" id="category" name="category">
+                            <option value="idea">Идея</option>
+                            <option value="problem">Проблема</option>
+                            <option value="gratitude">Благодарность</option>
+                            <option value="other" selected>Другое</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="feedbackText">Сообщение</label>
+                        <textarea class="textarea" id="feedbackText" name="text" maxlength="4000" rows="5" required></textarea>
+                    </div>
+                    <label class="check">
+                        <input type="checkbox" id="anonymous" name="is_anonymous">
+                        <span>Отправить анонимно<br><span class="muted small">HR не увидит, кто написал, но и ответить не сможет.</span></span>
+                    </label>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" type="submit">Отправить</button>
+                    </div>
+                </form>
+            </section>
+
+            {# Signed feedback with the HR replies, and the completed surveys. #}
+            <div class="stack">
+                <section class="card">
+                    <div class="card-head"><h2>Мои обращения</h2></div>
+                    <div id="myFeedback" class="loading">Загрузка…</div>
+                </section>
+                <section class="card">
+                    <div class="card-head"><h2>Пройденные опросы</h2></div>
+                    <div id="completedSurveys" class="loading">Загрузка…</div>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'ui/js/pages/center.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "ui/base.html" %}
+{% load static %}
+{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}
+
+{% block title %}Результаты опроса{% endblock %}
+
+{% block content %}
+    <div id="resultsPage" data-survey-id="{{ survey_id }}">
+        <div class="page-head">
+            <div>
+                <a class="muted small" href="/hr/surveys/">← Все опросы</a>
+                <h1 id="surveyTitle">Результаты</h1>
+                <div class="row" id="surveyMeta"></div>
+            </div>
+            <div class="page-actions">
+                <button class="btn btn-secondary" type="button" id="refreshBtn">Обновить</button>
+                <a class="btn btn-secondary" id="csvLink">CSV</a>
+                <a class="btn btn-secondary" id="xlsxLink">Excel</a>
+                <a class="btn btn-secondary" id="settingsLink">Настройки</a>
+                <button class="btn btn-danger hidden" type="button" id="closeBtn">Завершить</button>
+            </div>
+        </div>
+
+        <div class="stack" id="results"><div class="loading">Загрузка…</div></div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'ui/js/pages/hr-survey-results.js' %}"></script>
+{% endblock %}

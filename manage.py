@@ -1,12 +1,12 @@
-#!/usr/bin/env python
-"""Django's command-line utility for administrative tasks."""
+# Copyright NGGT.LightKeeper. All Rights Reserved.
+
 import os
 import sys
 
 
-def main():
-    """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'PULSEHR.settings')
+# Run Django administrative tasks with the project settings, with a clear error when Django is missing.
+def main() -> None:
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PULSEHR.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -15,8 +15,10 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+
     execute_from_command_line(sys.argv)
 
 
-if __name__ == '__main__':
+# Run: python manage.py <command>
+if __name__ == "__main__":
     main()

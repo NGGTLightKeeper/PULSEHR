@@ -1,0 +1,64 @@
+{% extends "ui/base.html" %}
+{% load static %}
+{% comment %} Copyright NGGT.LightKeeper. All Rights Reserved. {% endcomment %}
+
+{% block title %}Профиль{% endblock %}
+{% block page_class %}page-narrow{% endblock %}
+
+{% block content %}
+    <div class="page-head">
+        <div>
+            <h1>Профиль</h1>
+            <p class="muted">Другие сотрудники и опросы видят только ваше имя пользователя.</p>
+        </div>
+    </div>
+
+    <div class="stack">
+        {# Account data. #}
+        <section class="card">
+            <form class="form" id="profileForm" novalidate>
+                <div class="grid grid-2">
+                    <div class="field">
+                        <label for="email">E-mail</label>
+                        <input class="input" id="email" disabled>
+                        <span class="field-hint">Используется для входа.</span>
+                    </div>
+                    <div class="field">
+                        <label for="role">Роль</label>
+                        <input class="input" id="role" disabled>
+                    </div>
+                    <div class="field">
+                        <label for="username">Имя пользователя</label>
+                        <input class="input" id="username" name="username" maxlength="32" required>
+                    </div>
+                    <div class="field">
+                        <label for="phone">Телефон <span id="phoneBadge"></span></label>
+                        <input class="input" id="phone" name="phone" type="tel" placeholder="+7 900 000-00-00">
+                    </div>
+                    <div class="field">
+                        <label for="department">Подразделение</label>
+                        <select class="select" id="department" name="department_id"></select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Сохранить</button>
+                </div>
+            </form>
+        </section>
+
+        <div class="grid grid-2">
+            <section class="card">
+                <div class="card-head"><h2>Telegram</h2></div>
+                <div id="telegramBlock"></div>
+            </section>
+            <section class="card">
+                <div class="card-head"><h2>Push-уведомления</h2></div>
+                <div id="pushBlock"></div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'ui/js/pages/profile.js' %}"></script>
+{% endblock %}
